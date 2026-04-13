@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StratAIgist Media — Conseil stratégique IA pour dirigeants</title>
+<meta name="description" content="StratAIgist Media accompagne les leaders d'entreprise dans leur transformation IA avec clarté, expertise et humanité. Conseil stratégique, diagnostic IA, formations et contenu média.">
+<meta name="keywords" content="IA, intelligence artificielle, stratégie, conseil, dirigeants, transformation numérique, StratAIgist">
+<meta property="og:title" content="StratAIgist Media — Votre écosystème stratégique pour naviguer l'ère de l'IA">
+<meta property="og:description" content="Nous accompagnons les leaders d'entreprise dans leur transformation IA avec clarté, expertise et humanité.">
+<meta property="og:image" content="images/logo-square.jpg">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://strataigistmedia.com">
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   STRATAIGIST MEDIA — PROTOTYPE V2
+   Inspired by: NVIDIA hero (frosted glass),
+   Leeroy.ca (immersive photo backgrounds),
+   Insphic (natural, organic feel)
+   ═══════════════════════════════════════════ */
+
+:root {
+  --forest: #354a40;
+  --forest-deep: #2a3a30;
+  --cream: #faf5ec;
+  --cream-soft: #f5efe5;
+  --gold: #c9994d;
+  --gold-soft: #d4ad6a;
+  --gold-muted: #bfa87a;
+  --sage: #7a9e8e;
+  --sage-soft: #92b3a3;
+  --mint: #c8ddd3;
+  --white: #ffffff;
+  --noir: #1c1917;
+  --beige: #ddd4c6;
+  --beige-soft: #e8e0d4;
+  --warm-gray: #a89e92;
+  --teal: #6b8a84;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family:'Inter',sans-serif;
+  font-weight:300;
+  color:var(--forest);
+  background:var(--cream);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ─── NAVIGATION ─── */
+.nav {
+  position:fixed; top:0; left:0; right:0; z-index:200;
+  padding:20px 40px;
+  display:flex; align-items:center; justify-content:space-between;
+  transition:all .6s cubic-bezier(.22,1,.36,1);
+  background:rgba(42,58,48,.85);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+}
+.nav.scrolled {
+  background:rgba(42,58,48,.95);
+  backdrop-filter:blur(24px) saturate(1.4);
+  -webkit-backdrop-filter:blur(24px) saturate(1.4);
+  padding:14px 40px;
+  box-shadow:0 2px 20px rgba(0,0,0,.15);
+}
+.nav.scrolled .nav-link { color:rgba(250,245,236,.75); }
+.nav.scrolled .nav-link:hover, .nav.scrolled .nav-link.active { color:var(--gold-soft); }
+
+.logo {
+  cursor:pointer; text-decoration:none; display:inline-block;
+  transition:opacity .4s;
+}
+.logo:hover { opacity:.85; }
+.nav-logo {
+  font-family:'Open Sans',sans-serif; font-weight:600;
+  font-size:26px; letter-spacing:.5px; color:var(--beige-soft);
+  text-shadow:0 1px 8px rgba(0,0,0,.2);
+}
+.nav-logo .ai { color:var(--gold); }
+.nav-logo .media {
+  font-weight:300; color:var(--beige-soft); opacity:.7;
+  margin-left:5px; font-size:22px;
+}
+.nav.scrolled .nav-logo { font-size:22px; }
+.nav.scrolled .nav-logo .media { font-size:18px; }
+.logo img {
+  height:67px; width:auto;
+  filter:drop-shadow(0 1px 6px rgba(0,0,0,.3)) brightness(1.4);
+}
+.nav.scrolled .logo img {
+  height:60px;
+  filter:drop-shadow(0 1px 6px rgba(0,0,0,.3)) brightness(1.45);
+}
+
+.nav-links { display:flex; align-items:center; gap:32px; }
+.nav-link {
+  background:none; border:none; cursor:pointer;
+  color:rgba(250,245,236,.75); font-family:'Inter',sans-serif;
+  font-weight:300; font-size:13px; letter-spacing:.8px;
+  text-transform:uppercase; transition:all .3s; padding:0;
+}
+.nav-link:hover, .nav-link.active { color:var(--cream); }
+.lang-switch {
+  background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.15);
+  border-radius:24px; color:var(--cream); padding:6px 16px;
+  cursor:pointer; font-family:'Inter',sans-serif; font-weight:400;
+  font-size:12px; letter-spacing:1px; transition:all .3s;
+}
+.nav.scrolled .lang-switch {
+  background:rgba(201,153,77,.12); border-color:rgba(201,153,77,.25); color:var(--gold-soft);
+}
+.hamburger {
+  display:none; background:none; border:none;
+  color:var(--cream); font-size:24px; cursor:pointer; transition:color .4s;
+}
+.nav.scrolled .hamburger { color:var(--cream); }
+.mobile-menu {
+  display:none; position:fixed; top:0; left:0; right:0; bottom:0;
+  background:rgba(42,58,48,.97); backdrop-filter:blur(20px);
+  z-index:199; flex-direction:column; justify-content:center;
+  align-items:center; gap:24px;
+}
+.mobile-menu.open { display:flex; }
+.mobile-menu .nav-link { color:var(--cream); font-size:18px; letter-spacing:2px; }
+.mobile-menu .close-btn {
+  position:absolute; top:24px; right:40px; background:none;
+  border:none; color:var(--cream); font-size:28px; cursor:pointer;
+}
+
+@media(max-width:900px) {
+  .nav-links { display:none !important; }
+  .hamburger { display:block !important; }
+  .nav { padding:16px 24px; }
+}
+
+/* ─── HERO (NVIDIA-inspired) ─── */
+.hero {
+  position:relative; min-height:100vh; display:flex;
+  align-items:center; overflow:hidden;
+}
+.hero-bg {
+  position:absolute; inset:0; z-index:0;
+}
+.hero-bg img {
+  width:100%; height:100%; object-fit:cover;
+  animation:kenBurns 20s ease-in-out infinite alternate;
+}
+@keyframes kenBurns {
+  0% { transform:scale(1) translate(0,0); }
+  100% { transform:scale(1.08) translate(-1%,-1%); }
+}
+.hero-overlay {
+  position:absolute; inset:0; z-index:1;
+  background:linear-gradient(105deg,
+    rgba(42,58,48,.82) 0%,
+    rgba(42,58,48,.65) 35%,
+    rgba(42,58,48,.18) 60%,
+    transparent 75%
+  );
+}
+.hero-frost {
+  position:absolute; left:0; top:0; bottom:0; width:55%; z-index:2;
+  backdrop-filter:blur(30px) saturate(1.2);
+  -webkit-backdrop-filter:blur(30px) saturate(1.2);
+  mask-image:linear-gradient(to right, black 70%, transparent 100%);
+  -webkit-mask-image:linear-gradient(to right, black 70%, transparent 100%);
+}
+.hero-content {
+  position:relative; z-index:3;
+  max-width:600px; padding:0 60px; margin-top:40px;
+}
+.hero-tagline {
+  font-weight:300; font-size:12px; color:var(--gold-soft);
+  letter-spacing:5px; text-transform:uppercase; margin-bottom:28px;
+  opacity:0; animation:fadeUp .8s ease .3s forwards;
+}
+.hero h1 {
+  font-family:'Open Sans',sans-serif; font-weight:300;
+  font-size:clamp(36px,4.5vw,54px); color:var(--cream);
+  line-height:1.15; margin-bottom:20px; letter-spacing:-.5px;
+  opacity:0; animation:fadeUp .8s ease .5s forwards;
+}
+.hero-sub {
+  font-size:17px; color:var(--beige); line-height:1.7;
+  margin-bottom:40px; font-weight:200;
+  opacity:0; animation:fadeUp .8s ease .7s forwards;
+}
+.hero-buttons {
+  display:flex; gap:16px; flex-wrap:wrap;
+  opacity:0; animation:fadeUp .8s ease .9s forwards;
+}
+
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(24px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+@media(max-width:900px) {
+  .hero-content { padding:0 24px; max-width:100%; }
+  .hero-frost { width:100%; mask-image:none; -webkit-mask-image:none; }
+  .hero-overlay { background:rgba(42,58,48,.7); }
+}
+
+/* ─── BUTTONS ─── */
+.btn-primary {
+  background:linear-gradient(135deg, var(--gold-soft), var(--gold-muted));
+  color:var(--white); border:none; padding:15px 34px; border-radius:4px;
+  cursor:pointer; font-family:'Inter',sans-serif; font-weight:400;
+  font-size:14px; letter-spacing:.8px; transition:all .4s;
+}
+.btn-primary:hover { filter:brightness(1.08); transform:translateY(-1px); }
+.btn-ghost {
+  background:transparent; color:var(--cream); border:1px solid rgba(250,245,236,.3);
+  padding:15px 34px; border-radius:4px; cursor:pointer;
+  font-family:'Inter',sans-serif; font-weight:300;
+  font-size:14px; letter-spacing:.8px; transition:all .4s;
+}
+.btn-ghost:hover { background:rgba(250,245,236,.08); border-color:rgba(250,245,236,.5); }
+.btn-dark {
+  background:var(--forest); color:var(--cream); border:none;
+  padding:15px 34px; border-radius:4px; cursor:pointer;
+  font-family:'Inter',sans-serif; font-weight:400;
+  font-size:14px; letter-spacing:.8px; transition:all .4s;
+}
+.btn-dark:hover { background:var(--forest-deep); }
+
+/* ─── PHOTO SECTIONS (Leeroy-inspired) ─── */
+.photo-section {
+  position:relative; min-height:60vh; display:flex;
+  align-items:center; justify-content:center; overflow:hidden;
+}
+.photo-section .bg {
+  position:absolute; inset:0;
+}
+.photo-section .bg img {
+  width:100%; height:100%; object-fit:cover;
+  transition:transform 8s ease;
+}
+.photo-section:hover .bg img { transform:scale(1.03); }
+.photo-section .overlay {
+  position:absolute; inset:0;
+  background:rgba(42,58,48,.45);
+}
+.photo-section .content {
+  position:relative; z-index:2; text-align:center;
+  max-width:700px; padding:80px 24px;
+}
+.photo-section .content h2 {
+  font-family:'Open Sans',sans-serif; font-weight:300;
+  font-size:clamp(28px,3.5vw,42px); color:var(--cream);
+  margin-bottom:16px; letter-spacing:-.3px;
+}
+.photo-section .content p {
+  font-size:17px; color:var(--beige); line-height:1.8;
+  font-weight:200;
+}
+
+/* ─── MEDIA SPLIT BACKGROUND ─── */
+.media-bg-split {
+  display:flex; width:100%; height:100%;
+}
+.media-bg-split .media-bg-left {
+  width:66%; height:100%; object-fit:cover; object-position:left center;
+}
+.media-bg-split .media-bg-right {
+  width:34%; height:100%; object-fit:cover; object-position:center center;
+}
+@media(max-width:900px) {
+  .media-bg-split .media-bg-left { width:100%; }
+  .media-bg-split .media-bg-right { display:none; }
+}
+
+/* ─── PARALLAX IMAGE BAND ─── */
+.parallax-band {
+  height:45vh; overflow:hidden; position:relative;
+}
+.parallax-band img {
+  width:100%; height:130%; object-fit:cover;
+  position:absolute; top:-15%;
+  will-change:transform;
+}
+
+/* ─── TEXT SECTIONS ─── */
+.text-section {
+  padding:120px 24px; background:var(--cream);
+}
+.text-section.dark {
+  background:var(--forest-deep); color:var(--cream);
+}
+.text-section .container {
+  max-width:900px; margin:0 auto;
+}
+.section-label {
+  font-size:11px; font-weight:400; letter-spacing:4px;
+  text-transform:uppercase; color:var(--gold-soft); margin-bottom:20px;
+}
+.section-title {
+  font-family:'Open Sans',sans-serif; font-weight:300;
+  font-size:clamp(30px,3.5vw,44px); line-height:1.15;
+  letter-spacing:-.5px; margin-bottom:24px;
+}
+.section-text {
+  font-size:17px; line-height:1.9; font-weight:200; opacity:.85;
+  max-width:700px;
+}
+.dark .section-text { color:var(--beige); }
+
+/* ─── SERVICES ─── */
+.services-list { margin-top:48px; }
+.service-item {
+  display:flex; gap:28px; padding:32px 0;
+  border-bottom:1px solid rgba(42,58,48,.08);
+  align-items:flex-start;
+  opacity:0; transform:translateY(20px);
+  transition:all .6s ease;
+}
+.service-item.visible { opacity:1; transform:translateY(0); }
+.dark .service-item { border-bottom-color:rgba(250,245,236,.08); }
+.service-num {
+  font-family:'Open Sans',sans-serif; font-weight:200;
+  font-size:42px; color:var(--gold-soft); opacity:.35;
+  min-width:60px; line-height:1;
+}
+.service-name {
+  font-family:'Open Sans',sans-serif; font-weight:400;
+  font-size:20px; margin-bottom:6px;
+}
+.service-desc {
+  font-size:15px; line-height:1.7; opacity:.7; font-weight:200;
+}
+
+/* ─── FOUNDER (split layout) ─── */
+.founder-split {
+  display:grid; grid-template-columns:1fr 1fr;
+  min-height:80vh;
+}
+.founder-photo {
+  position:relative; overflow:hidden;
+}
+.founder-photo img {
+  width:100%; height:100%; object-fit:cover;
+  animation:kenBurnsSlow 30s ease-in-out infinite alternate;
+}
+@keyframes kenBurnsSlow {
+  0% { transform:scale(1); }
+  100% { transform:scale(1.06); }
+}
+.founder-info {
+  display:flex; flex-direction:column; justify-content:center;
+  padding:80px 60px; background:var(--cream-soft);
+}
+.founder-info h3 {
+  font-family:'Open Sans',sans-serif; font-weight:600;
+  font-size:28px; color:var(--forest); margin-bottom:4px;
+}
+.founder-info .role {
+  font-size:15px; color:var(--gold); margin-bottom:28px;
+  letter-spacing:.5px;
+}
+.founder-info .bio {
+  font-size:16px; line-height:1.85; color:var(--forest);
+  opacity:.8; font-weight:200; margin-bottom:36px;
+}
+
+@media(max-width:900px) {
+  .founder-split { grid-template-columns:1fr; }
+  .founder-photo { height:50vh; }
+  .founder-info { padding:48px 24px; }
+}
+
+/* ─── PLATFORMS GRID ─── */
+.platforms-grid {
+  display:grid; grid-template-columns:repeat(4,1fr);
+  gap:0; margin-top:60px;
+}
+.platform-item {
+  padding:48px 24px; text-align:center;
+  border-right:1px solid rgba(53,74,64,.08);
+  transition:background .4s;
+}
+.platform-item:last-child { border-right:none; }
+.platform-item:hover { background:rgba(53,74,64,.04); }
+.platform-icon { font-size:32px; margin-bottom:16px; opacity:.7; }
+.platform-name {
+  font-family:'Open Sans',sans-serif; font-weight:400;
+  font-size:16px; color:var(--forest); margin-bottom:8px;
+}
+.platform-status {
+  font-size:12px; color:var(--gold); letter-spacing:1px;
+  text-transform:uppercase; font-weight:400;
+}
+
+@media(max-width:768px) {
+  .platforms-grid { grid-template-columns:1fr 1fr; }
+  .platform-item { border-bottom:1px solid rgba(53,74,64,.08); }
+}
+
+/* ─── PARTNER ─── */
+.partner-card {
+  display:flex; gap:28px; align-items:center;
+  padding:36px; border-radius:8px;
+  background:var(--white); border:1px solid var(--beige);
+  max-width:600px; margin-top:40px;
+}
+.partner-avatar {
+  width:80px; height:80px; border-radius:50%; flex-shrink:0;
+  background:rgba(93,126,114,.1);
+  display:flex; align-items:center; justify-content:center;
+  font-size:28px; color:var(--forest); opacity:.5;
+}
+.partner-name { font-weight:500; font-size:18px; color:var(--forest); }
+.partner-role { font-size:13px; color:var(--gold); margin:4px 0; }
+.partner-desc { font-size:13px; color:var(--teal); opacity:.8; }
+
+/* ─── DIAGNOSTIC CTA ─── */
+.diag-section {
+  text-align:center; padding:100px 24px;
+  background:linear-gradient(160deg, var(--cream-soft), rgba(200,221,211,.2));
+}
+.diag-card {
+  max-width:480px; margin:40px auto 0;
+  background:var(--white); border-radius:12px;
+  padding:48px 40px; box-shadow:0 20px 60px rgba(42,58,48,.06);
+  border:1px solid rgba(214,204,191,.3);
+}
+.diag-icon {
+  width:72px; height:72px; margin:0 auto 20px;
+  display:flex; align-items:center; justify-content:center;
+}
+.diag-icon svg { width:100%; height:100%; }
+.diag-card p { font-size:15px; line-height:1.7; color:var(--teal); margin-bottom:28px; }
+.diag-time { font-size:12px; color:var(--warm-gray); margin-top:16px; }
+
+/* ─── QUIZ DIAGNOSTIC ─── */
+.quiz-progress {
+  width:100%; height:6px; background:var(--beige); border-radius:3px;
+  margin-bottom:12px; overflow:hidden;
+}
+.quiz-progress-bar {
+  height:100%; width:0; background:linear-gradient(90deg,var(--sage),var(--gold));
+  border-radius:3px; transition:width .5s cubic-bezier(.22,1,.36,1);
+}
+.quiz-counter {
+  font-size:12px; color:var(--warm-gray); letter-spacing:1px; margin-bottom:8px;
+}
+.quiz-dimension {
+  font-size:11px; font-weight:400; letter-spacing:3px; text-transform:uppercase;
+  color:var(--gold); margin-bottom:20px;
+}
+.quiz-question {
+  font-family:'Open Sans',sans-serif; font-weight:400; font-size:18px;
+  line-height:1.6; color:var(--forest); margin-bottom:24px;
+  animation:fadeUp .4s ease forwards;
+}
+.quiz-options { display:flex; flex-direction:column; gap:10px; }
+.quiz-opt {
+  background:var(--white); border:2px solid var(--beige); border-radius:10px;
+  padding:14px 18px; font-size:14px; line-height:1.5; color:var(--forest);
+  cursor:pointer; transition:all .3s; text-align:left; font-family:'Inter',sans-serif;
+  font-weight:300; animation:fadeUp .4s ease forwards;
+  opacity:0;
+}
+.quiz-opt:nth-child(1) { animation-delay:.05s; }
+.quiz-opt:nth-child(2) { animation-delay:.1s; }
+.quiz-opt:nth-child(3) { animation-delay:.15s; }
+.quiz-opt:nth-child(4) { animation-delay:.2s; }
+.quiz-opt:hover { border-color:var(--sage); background:rgba(200,221,211,.15); }
+.quiz-opt.selected { border-color:var(--gold); background:rgba(201,153,77,.08); }
+.quiz-nav { display:flex; justify-content:flex-start; margin-top:20px; }
+.quiz-back {
+  opacity:.5; font-size:18px; padding:8px 16px;
+}
+.quiz-back:hover { opacity:1; }
+
+/* Results */
+.result-score-ring { width:180px; height:180px; margin:24px auto; }
+.score-svg { width:100%; height:100%; }
+.score-num { font-family:'Open Sans',sans-serif; font-weight:300; font-size:42px; fill:var(--forest); }
+.score-label { font-family:'Inter',sans-serif; font-weight:200; font-size:16px; fill:var(--warm-gray); }
+.result-level {
+  text-align:center; font-size:22px; font-family:'Open Sans',sans-serif;
+  font-weight:400; color:var(--gold); margin-bottom:12px;
+}
+.result-desc {
+  font-size:15px; line-height:1.7; color:var(--forest); text-align:center;
+  max-width:520px; margin:0 auto 32px; font-weight:300;
+}
+.radar-wrap { margin:0 auto 32px; max-width:320px; }
+.radar-svg { width:100%; }
+.dim-bars { margin-bottom:32px; }
+.dim-bar-row { margin-bottom:14px; }
+.dim-bar-label {
+  font-size:12px; font-weight:400; color:var(--forest); margin-bottom:4px;
+  display:flex; justify-content:space-between;
+}
+.dim-bar-track {
+  height:8px; background:var(--beige); border-radius:4px; overflow:hidden;
+}
+.dim-bar-fill {
+  height:100%; border-radius:4px; width:0;
+  background:linear-gradient(90deg,var(--sage),var(--gold));
+  transition:width 1s cubic-bezier(.22,1,.36,1);
+}
+.result-reco {
+  font-size:14px; line-height:1.6; color:var(--teal); text-align:center;
+  font-style:italic; margin-bottom:8px; font-weight:300;
+}
+
+/* ─── EMAIL RESULTS BOX ─── */
+.email-results-box {
+  background:var(--white); border:1px solid var(--beige); border-radius:12px;
+  padding:20px 24px; margin:28px auto; max-width:480px; text-align:center;
+}
+.email-check-label {
+  display:flex; align-items:center; justify-content:center; gap:10px;
+  cursor:pointer; font-size:14px; color:var(--forest); font-weight:300;
+}
+.email-check-label input[type="checkbox"] {
+  width:18px; height:18px; accent-color:var(--gold);
+}
+.email-field-wrap {
+  margin-top:14px; display:flex; gap:10px; align-items:center; justify-content:center;
+}
+.email-input {
+  flex:1; max-width:280px; padding:10px 14px; border:1px solid var(--beige);
+  border-radius:8px; font-family:'Inter',sans-serif; font-size:14px;
+  font-weight:300; color:var(--forest); background:var(--cream-soft);
+  outline:none; transition:border-color .3s;
+}
+.email-input:focus { border-color:var(--gold); }
+.email-status {
+  font-size:12px; color:var(--sage); margin-top:8px; min-height:16px;
+}
+
+/* ─── CONTACT ─── */
+.contact-split {
+  display:grid; grid-template-columns:1fr 1fr; min-height:80vh;
+}
+.contact-photo { position:relative; overflow:hidden; }
+.contact-photo img {
+  width:100%; height:100%; object-fit:cover; object-position:center 40%;
+  animation:kenBurnsSlow 25s ease-in-out infinite alternate;
+}
+.contact-form-side {
+  display:flex; flex-direction:column; justify-content:center;
+  padding:80px 60px; background:var(--cream);
+}
+.chips { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:32px; }
+.chip {
+  padding:8px 18px; border-radius:24px; cursor:pointer;
+  border:1px solid var(--beige); background:transparent;
+  color:var(--forest); font-family:'Inter',sans-serif;
+  font-weight:300; font-size:13px; transition:all .3s;
+}
+.chip:hover { border-color:var(--gold-soft); }
+.chip.selected { background:var(--gold-soft); color:var(--white); border-color:var(--gold-soft); }
+.form-field { margin-bottom:18px; }
+.form-field label {
+  font-size:12px; color:var(--warm-gray); display:block;
+  margin-bottom:6px; letter-spacing:.5px; text-transform:uppercase;
+}
+.form-field input, .form-field textarea {
+  width:100%; padding:14px 0; border:none;
+  border-bottom:1px solid var(--beige);
+  background:transparent; font-family:'Inter',sans-serif;
+  font-weight:300; font-size:15px; color:var(--forest);
+  outline:none; transition:border .3s;
+}
+.form-field input:focus, .form-field textarea:focus {
+  border-bottom-color:var(--gold-soft);
+}
+.form-field textarea { resize:none; height:80px; }
+
+@media(max-width:900px) {
+  .contact-split { grid-template-columns:1fr; }
+  .contact-photo { height:40vh; }
+  .contact-form-side { padding:48px 24px; }
+}
+
+/* ─── NEWSLETTER BAND ─── */
+.newsletter-band {
+  background:var(--forest-deep); padding:60px 24px; text-align:center;
+}
+.newsletter-band h3 {
+  font-family:'Open Sans',sans-serif; font-weight:300;
+  font-size:24px; color:var(--cream); margin-bottom:24px;
+}
+.nl-row {
+  display:flex; gap:12px; justify-content:center;
+  flex-wrap:wrap; max-width:480px; margin:0 auto;
+}
+.nl-row input {
+  padding:14px 20px; border-radius:4px; border:1px solid rgba(250,245,236,.1);
+  background:rgba(250,245,236,.05); color:var(--cream); flex:1; min-width:250px;
+  font-family:'Inter',sans-serif; font-weight:300; font-size:14px; outline:none;
+}
+.nl-row input::placeholder { color:rgba(250,245,236,.35); }
+
+/* ─── FOOTER ─── */
+footer {
+  background:var(--noir); padding:60px 24px 36px; text-align:center;
+}
+footer .logo {
+  cursor:default; font-family:'Open Sans',sans-serif; font-weight:600;
+  font-size:22px; letter-spacing:1px; color:var(--beige-soft);
+}
+footer .logo .ai { color:var(--gold); }
+footer .logo .media { font-weight:300; color:var(--beige-soft); opacity:.7; margin-left:4px; }
+footer .logo img { height:36px; filter:brightness(0.8) opacity(0.7); }
+footer .tagline {
+  font-size:13px; color:var(--warm-gray); margin:16px 0 6px;
+  font-weight:200; letter-spacing:.5px;
+}
+footer a { font-size:13px; color:var(--gold-soft); text-decoration:none; }
+.social-links { display:flex; justify-content:center; gap:20px; margin:16px 0; }
+.social-icon {
+  color:var(--sage-soft); transition:all .3s; padding:8px;
+  border:1px solid rgba(146,179,163,.2); border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+}
+.social-icon:hover { color:var(--gold-soft); border-color:var(--gold-soft); transform:translateY(-2px); }
+footer .copy {
+  font-size:11px; color:var(--beige-soft); opacity:.65;
+  margin-top:32px; letter-spacing:.5px;
+}
+
+/* ─── SCROLL ANIMATIONS ─── */
+.reveal {
+  opacity:0; transform:translateY(28px);
+  transition:opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1);
+}
+.reveal.visible { opacity:1; transform:translateY(0); }
+.reveal.d1 { transition-delay:.12s; }
+.reveal.d2 { transition-delay:.24s; }
+.reveal.d3 { transition-delay:.36s; }
+.reveal.d4 { transition-delay:.48s; }
+
+/* ─── PAGE SYSTEM ─── */
+.page { display:none; }
+.page.active { display:block; animation:pageIn .6s ease; }
+@keyframes pageIn { from{opacity:0} to{opacity:1} }
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav class="nav" id="navbar">
+  <span class="logo nav-logo" onclick="goTo('home')">Strat<span class="ai">AI</span>gist<span class="media">media</span></span>
+  <div class="nav-links" id="navLinks"></div>
+  <button class="hamburger" onclick="openMenu()">☰</button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="close-btn" onclick="closeMenu()">✕</button>
+  <div id="mobileLinks"></div>
+</div>
+
+<!-- ═══════════ HOME ═══════════ -->
+<div class="page active" id="page-home">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg">
+      <img src="https://images.unsplash.com/photo-1497366412874-3415097a27e7?w=1920&q=80" alt="Table de réunion épurée">
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-frost"></div>
+    <div class="hero-content">
+      <p class="hero-tagline" id="heroTagline"></p>
+      <h1 id="heroH1"></h1>
+      <p class="hero-sub" id="heroSub"></p>
+      <div class="hero-buttons">
+        <button class="btn-primary" onclick="goTo('contact')" id="heroCta1"></button>
+        <button class="btn-ghost" onclick="goTo('services')" id="heroCta2"></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Essence -->
+  <section class="text-section">
+    <div class="container">
+      <div class="reveal"><span class="section-label" id="essLabel"></span></div>
+      <div class="reveal d1"><h2 class="section-title" id="essTitle"></h2></div>
+      <div class="reveal d2"><p class="section-text" id="essText"></p></div>
+    </div>
+  </section>
+
+  <!-- Photo band 1 -->
+  <div class="parallax-band">
+    <img src="images/hero-bg.jpg" alt="Studio podcast avec mur végétal luxuriant" id="parallax1" style="object-position:center 85%">
+  </div>
+
+  <!-- Services preview -->
+  <section class="text-section dark">
+    <div class="container">
+      <div class="reveal"><span class="section-label">Services</span></div>
+      <div class="reveal d1"><h2 class="section-title" id="svcTitle"></h2></div>
+      <div class="reveal d2"><p class="section-text" id="svcSub"></p></div>
+      <div class="services-list" id="svcPreview"></div>
+      <div class="reveal d4" style="margin-top:48px">
+        <button class="btn-ghost" onclick="goTo('services')" id="svcMore"></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Photo section with text overlay -->
+  <section class="photo-section">
+    <div class="bg">
+      <img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=1920&q=80" alt="Espace design minimaliste en bois">
+    </div>
+    <div class="overlay" style="background:rgba(42,58,48,.4)"></div>
+    <div class="content">
+      <div class="reveal"><h2 id="ctaTitle"></h2></div>
+      <div class="reveal d1"><p id="ctaText"></p></div>
+      <div class="reveal d2" style="margin-top:28px">
+        <button class="btn-primary" onclick="goTo('diagnostic')" id="ctaBtn"></button>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ═══════════ SERVICES ═══════════ -->
+<div class="page" id="page-services">
+  <section class="photo-section" style="min-height:50vh">
+    <div class="bg">
+      <img src="https://images.unsplash.com/photo-1497215842964-222b430dc094?w=1920&q=80" alt="Bureau moderne avec plantes">
+    </div>
+    <div class="overlay"></div>
+    <div class="content">
+      <div class="reveal"><h2 id="svcPageTitle"></h2></div>
+      <div class="reveal d1"><p id="svcPageSub"></p></div>
+    </div>
+  </section>
+  <section class="text-section">
+    <div class="container">
+      <div class="reveal"><p class="section-text" id="svcIntro"></p></div>
+      <div class="services-list" id="svcAll"></div>
+      <div class="reveal d4" style="margin-top:40px;padding:24px;background:rgba(181,212,196,.12);border-radius:6px">
+        <p style="font-size:15px;line-height:1.7;font-style:italic;color:var(--teal)" id="svcFin"></p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════ MEDIA ═══════════ -->
+<div class="page" id="page-media">
+  <section class="photo-section" style="min-height:50vh">
+    <div class="bg">
+      <img src="https://images.unsplash.com/photo-1589903308904-1010c2294adc?w=1920&q=80" alt="Studio podcast professionnel">
+    </div>
+    <div class="overlay" style="background:rgba(42,58,48,.4)"></div>
+    <div class="content">
+      <div class="reveal"><h2 id="mediaTitle"></h2></div>
+      <div class="reveal d1"><p id="mediaSub"></p></div>
+    </div>
+  </section>
+  <section class="text-section">
+    <div class="container" style="text-align:center">
+      <div class="reveal"><p class="section-text" style="margin:0 auto 60px;max-width:600px" id="mediaDesc"></p></div>
+      <div class="platforms-grid" id="platGrid"></div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════ ABOUT ═══════════ -->
+<div class="page" id="page-about">
+  <div class="founder-split">
+    <div class="founder-photo">
+      <img src="images/profil-podcast.jpg" alt="Martine Charpentier">
+    </div>
+    <div class="founder-info">
+      <div class="reveal"><span class="section-label" id="aboutLabel"></span></div>
+      <div class="reveal d1"><h3>Martine Charpentier</h3></div>
+      <div class="reveal d1"><p class="role" id="aboutRole"></p></div>
+      <div class="reveal d2"><p class="bio" id="aboutBio"></p></div>
+      <div class="reveal d3"><button class="btn-primary" onclick="goTo('contact')" id="aboutCta"></button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ PARTNERS ═══════════ -->
+<div class="page" id="page-partners">
+  <section class="photo-section" style="min-height:45vh">
+    <div class="bg">
+      <img src="images/ambiance-5.jpg" alt="Silhouettes en salle vitrée — réunion crépuscule" style="object-position:center 60%">
+    </div>
+    <div class="overlay"></div>
+    <div class="content">
+      <div class="reveal"><h2 id="partTitle"></h2></div>
+      <div class="reveal d1"><p id="partSub"></p></div>
+    </div>
+  </section>
+  <section class="text-section">
+    <div class="container">
+      <div class="reveal">
+        <div class="partner-card">
+          <div class="partner-avatar">EB</div>
+          <div>
+            <p class="partner-name">Erich Buerger</p>
+            <p class="partner-role">Business Partner StratAIgist</p>
+            <p class="partner-desc">Head of eCommerce Artificial Intelligence — eCommerce LabWorks</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════ DIAGNOSTIC ═══════════ -->
+<div class="page" id="page-diagnostic">
+  <div class="parallax-band" style="height:35vh">
+    <img src="images/ambiance-4.jpg" alt="Équipe diversifiée en réunion stratégique" style="object-position:right center">
+  </div>
+  <section class="diag-section">
+    <div class="container" style="max-width:680px">
+      <!-- INTRO -->
+      <div id="diagIntro">
+        <div class="reveal"><h2 class="section-title" id="diagTitle"></h2></div>
+        <div class="reveal d1"><p class="section-text" style="margin:0 auto" id="diagDesc"></p></div>
+        <div class="reveal d2">
+          <div class="diag-card">
+            <div class="diag-icon">
+              <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Outer ring -->
+                <circle cx="40" cy="40" r="36" stroke="#c8ddd3" stroke-width="1.5" opacity=".5"/>
+                <!-- Middle ring -->
+                <circle cx="40" cy="40" r="26" stroke="#7a9e8e" stroke-width="1" stroke-dasharray="4 3" opacity=".4"/>
+                <!-- Radar/data shape -->
+                <polygon points="40,12 62,28 58,54 22,54 18,28" fill="none" stroke="#c9994d" stroke-width="1.8" stroke-linejoin="round" opacity=".7"/>
+                <polygon points="40,18 56,30 53,50 27,50 24,30" fill="url(#diagGrad)" opacity=".15"/>
+                <!-- Data points -->
+                <circle cx="40" cy="12" r="3" fill="#c9994d"/>
+                <circle cx="62" cy="28" r="3" fill="#c9994d"/>
+                <circle cx="58" cy="54" r="3" fill="#7a9e8e"/>
+                <circle cx="22" cy="54" r="3" fill="#7a9e8e"/>
+                <circle cx="18" cy="28" r="3" fill="#c9994d"/>
+                <!-- Center dot -->
+                <circle cx="40" cy="40" r="4" fill="#354a40" opacity=".6"/>
+                <!-- Axis lines -->
+                <line x1="40" y1="40" x2="40" y2="12" stroke="#354a40" stroke-width=".7" opacity=".2"/>
+                <line x1="40" y1="40" x2="62" y2="28" stroke="#354a40" stroke-width=".7" opacity=".2"/>
+                <line x1="40" y1="40" x2="58" y2="54" stroke="#354a40" stroke-width=".7" opacity=".2"/>
+                <line x1="40" y1="40" x2="22" y2="54" stroke="#354a40" stroke-width=".7" opacity=".2"/>
+                <line x1="40" y1="40" x2="18" y2="28" stroke="#354a40" stroke-width=".7" opacity=".2"/>
+                <defs>
+                  <linearGradient id="diagGrad" x1="40" y1="18" x2="40" y2="50">
+                    <stop offset="0%" stop-color="#c9994d" stop-opacity=".6"/>
+                    <stop offset="100%" stop-color="#7a9e8e" stop-opacity=".3"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+            <p id="diagCard"></p>
+            <button class="btn-primary" onclick="startDiag()" id="diagCta"></button>
+            <p class="diag-time" id="diagTime"></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUESTIONNAIRE -->
+      <div id="diagQuiz" style="display:none">
+        <div class="quiz-progress">
+          <div class="quiz-progress-bar" id="quizBar"></div>
+        </div>
+        <p class="quiz-counter" id="quizCounter"></p>
+        <div class="quiz-dimension" id="quizDim"></div>
+        <h3 class="quiz-question" id="quizQ"></h3>
+        <div class="quiz-options" id="quizOpts"></div>
+        <div class="quiz-nav">
+          <button class="btn-dark quiz-back" id="quizBack" onclick="prevQ()">←</button>
+        </div>
+      </div>
+
+      <!-- RESULTS -->
+      <div id="diagResults" style="display:none">
+        <h2 class="section-title" id="resTitle"></h2>
+        <div class="result-score-ring">
+          <svg viewBox="0 0 200 200" class="score-svg">
+            <circle cx="100" cy="100" r="85" fill="none" stroke="var(--beige)" stroke-width="8"/>
+            <circle cx="100" cy="100" r="85" fill="none" stroke="var(--gold)" stroke-width="8"
+              stroke-dasharray="534" stroke-dashoffset="534" stroke-linecap="round"
+              id="scoreCircle" transform="rotate(-90 100 100)"/>
+            <text x="100" y="92" text-anchor="middle" class="score-num" id="scoreNum">0</text>
+            <text x="100" y="114" text-anchor="middle" class="score-label">/60</text>
+          </svg>
+        </div>
+        <div class="result-level" id="resLevel"></div>
+        <p class="result-desc" id="resDesc"></p>
+
+        <!-- Radar chart -->
+        <div class="radar-wrap">
+          <h3 id="resDimTitle" style="font-family:'Open Sans',sans-serif;font-weight:300;font-size:20px;margin-bottom:20px;text-align:center"></h3>
+          <svg viewBox="0 0 300 280" class="radar-svg" id="radarSvg"></svg>
+        </div>
+
+        <!-- Dimension breakdown -->
+        <div class="dim-bars" id="dimBars"></div>
+
+        <p class="result-reco" id="resReco"></p>
+
+        <!-- Email results -->
+        <div class="email-results-box" id="emailBox">
+          <label class="email-check-label">
+            <input type="checkbox" id="emailCheck" onchange="toggleEmailField()">
+            <span id="emailCheckText"></span>
+          </label>
+          <div class="email-field-wrap" id="emailFieldWrap" style="display:none">
+            <input type="email" class="email-input" id="emailInput" placeholder="">
+            <button class="btn-primary" style="padding:10px 24px;font-size:13px" onclick="sendDiagEmail()" id="emailSendBtn"></button>
+          </div>
+          <p class="email-status" id="emailStatus"></p>
+        </div>
+
+        <div style="text-align:center;margin-top:32px">
+          <button class="btn-primary" onclick="goTo('contact')" id="resCta"></button>
+          <button class="btn-dark" style="margin-left:12px" onclick="resetDiag()" id="resReset"></button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════ CONTACT ═══════════ -->
+<div class="page" id="page-contact">
+  <div class="contact-split">
+    <div class="contact-photo">
+      <img src="images/ambiance-6.jpg" alt="Espace chaleureux avec murs végétaux et éclairage doré">
+    </div>
+    <div class="contact-form-side">
+      <div class="reveal"><span class="section-label" id="ctcLabel"></span></div>
+      <div class="reveal d1"><h2 class="section-title" style="font-size:32px;margin-bottom:8px" id="ctcTitle"></h2></div>
+      <div class="reveal d1"><p style="font-size:15px;color:var(--warm-gray);margin-bottom:28px" id="ctcSub"></p></div>
+      <div class="reveal d2"><div class="chips" id="ctcChips"></div></div>
+      <div class="reveal d3" id="ctcForm"></div>
+    </div>
+  </div>
+
+  <!-- Newsletter -->
+  <div class="newsletter-band">
+    <div class="reveal"><h3 id="nlTitle"></h3></div>
+    <div class="reveal d1">
+      <div class="nl-row">
+        <input type="email" id="nlInput">
+        <button class="btn-primary" id="nlBtn"></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <span class="logo">Strat<span class="ai">AI</span>gist<span class="media">media</span></span>
+  <p class="tagline" id="ftTag"></p>
+  <div class="social-links">
+    <a href="https://www.instagram.com/strataigistmedia" target="_blank" rel="noopener" aria-label="Instagram" class="social-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+    </a>
+    <a href="https://www.linkedin.com/company/strataigist-media" target="_blank" rel="noopener" aria-label="LinkedIn" class="social-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+    </a>
+    <a href="https://youtube.com/@strataigist?si=vOzDnuB1tJ1lDZqn" target="_blank" rel="noopener" aria-label="YouTube" class="social-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19.13C5.12 19.56 12 19.56 12 19.56s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.43z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
+    </a>
+  </div>
+  <a id="ftEmail" href="mailto:info@strataigistmedia.com"></a>
+  <p class="copy" id="ftCopy"></p>
+</footer>
+
+
+<script>
+// ─── DATA ───
+const D = {
+  fr: {
+    nav:{home:"Accueil",services:"Services",media:"Média",about:"À propos",partners:"Partenaires",diagnostic:"Diagnostic IA",contact:"Contact"},
+    hero:{tagline:"IA pour dirigeants d'entreprise",h1:"Votre écosystème stratégique\npour naviguer l'ère de l'IA",sub:"Nous accompagnons les leaders d'entreprise dans leur transformation IA — avec clarté, expertise et humanité.",cta1:"Prendre rendez-vous",cta2:"Découvrir nos services"},
+    essence:{label:"Notre essence",title:"Clarté dans la complexité",text:"Dans cet océan d'information sur l'intelligence artificielle, nous créons un espace de clarté pour les entrepreneurs et leaders exécutifs. Du support personnalisé par nos conseillers stratégiques aux services à la carte, nous apportons de la valeur condensée pour vous aider à naviguer l'écosystème agentique avec confiance."},
+    services:{
+      title:"Business StratAIgist Advisory",sub:"Un conseiller expérimenté vous est assigné pour guider votre transformation IA avec rigueur et humanité.",
+      intro:"Nos StratAIgist comprennent les défis d'affaires et ont travaillé sur des solutions transformatives avec des leaders exécutifs tout au long de leur carrière. Leur acumen d'affaires leur permet de comprendre votre entreprise, vos processus et vos défis, et de compléter un diagnostic complet qui guidera votre plan d'action et votre vision.",
+      items:[
+        {num:"01",name:"Diagnostic IA d'affaires",desc:"Évaluation complète de votre maturité IA et identification des opportunités."},
+        {num:"02",name:"Vision IA — Plan d'action",desc:"Sessions stratégiques pour définir votre vision et feuille de route IA."},
+        {num:"03",name:"Recherche de solutions & partenaires",desc:"Identification des meilleurs outils et partenaires pour vos besoins."},
+        {num:"04",name:"Ateliers & conférences IA",desc:"Adoption de l'IA à travers des ateliers pratiques et des conférences."},
+        {num:"05",name:"Gestion de projets IA",desc:"Accompagnement dans la mise en œuvre de vos projets d'intelligence artificielle."},
+        {num:"06",name:"Formation solutions IA",desc:"Formation de vos équipes aux outils et solutions IA pertinents."}
+      ],
+      fin:"Nous pouvons aussi vous aider à rechercher des services financiers selon votre situation.",
+      more:"Voir tous les services"
+    },
+    cta:{title:"Prêt à y voir plus clair ?",text:"Commencez par notre diagnostic IA en 15 questions — gratuit et sans engagement.",btn:"Commencer le diagnostic"},
+    media:{title:"StratAIgist Media",sub:"Bientôt disponible",desc:"Un écosystème de contenu inspirant pour accompagner les entreprises dans leur parcours IA. Pas de hype — juste de la clarté et de l'accompagnement.",platforms:["Chaîne YouTube","Podcast","Conférences","Webinaires"],statuses:["Bientôt disponible","Bientôt disponible","Sur demande","Bientôt disponible"]},
+    about:{label:"La fondatrice",role:"Stratège d'affaires & consultante exécutive StratAIgist",bio:"Plus de 25 ans d'expérience en stratégie commerciale, développement des affaires et leadership d'équipes exécutives. MBA, coaching certifié ICF, formation en gestion de projets IA et données (HEC Montréal). Une approche profondément humaine de la transformation d'entreprise.",cta:"Planifier une conversation"},
+    partners:{title:"Nos partenaires",sub:"Une équipe élargie de spécialistes pour mieux vous accompagner."},
+    diagnostic:{title:"Diagnostic IA rapide",desc:"Obtenez un premier aperçu de vos besoins en intelligence artificielle en quelques minutes.",card:"Répondez à 15 questions stratégiques pour obtenir un premier aperçu de votre maturité IA et des recommandations personnalisées.",cta:"Commencer le diagnostic",time:"⏱ Environ 5 minutes"},
+    contact:{label:"Contact",title:"Parlons de vos besoins",sub:"Choisissez le service qui vous intéresse",options:["Diagnostic","Service-conseil IA","Conférence","Formation","Atelier d'équipe","Coaching","Podcast","Autre"],name:"Nom complet",email:"Courriel",company:"Entreprise",message:"Votre message",send:"Envoyer",nl:"Abonnez-vous à notre infolettre StratAIgist",nlCta:"S'abonner",nlPh:"votre@courriel.com"},
+    footer:{tag:"Clarté. Accompagnement. Transformation.",email:"info@strataigistmedia.com",copy:"© 2026 StratAIgist Media. Tous droits réservés."}
+  },
+  en: {
+    nav:{home:"Home",services:"Services",media:"Media",about:"About",partners:"Partners",diagnostic:"AI Diagnostic",contact:"Contact"},
+    hero:{tagline:"AI for Business Leaders",h1:"Your strategic ecosystem\nfor navigating the AI era",sub:"We guide business leaders through their AI transformation — with clarity, expertise and humanity.",cta1:"Book a conversation",cta2:"Discover our services"},
+    essence:{label:"Our essence",title:"Clarity in complexity",text:"In this ocean of artificial intelligence information, we create a space of clarity for entrepreneurs and executive leaders. From personalized support by our strategic advisors to à la carte services, we bring condensed value to help you navigate the agentic ecosystem with confidence."},
+    services:{
+      title:"Business StratAIgist Advisory",sub:"An experienced advisor is assigned to guide your AI transformation with rigor and humanity.",
+      intro:"Our StratAIgist advisors understand business challenges and have worked on transformative solutions with executive leaders throughout their careers. Their business acumen allows them to understand your business, processes and challenges, and to complete a comprehensive diagnosis that will guide your action plan and vision.",
+      items:[
+        {num:"01",name:"Business AI Diagnosis",desc:"Comprehensive assessment of your AI maturity and opportunity identification."},
+        {num:"02",name:"AI Vision — Action Plan",desc:"Strategic sessions to define your AI vision and roadmap."},
+        {num:"03",name:"Solutions & Partners Research",desc:"Identifying the best tools and partners for your needs."},
+        {num:"04",name:"AI Adoption Workshops & Conferences",desc:"Hands-on workshops and conferences to drive AI adoption."},
+        {num:"05",name:"AI Project Management",desc:"Support in implementing your artificial intelligence projects."},
+        {num:"06",name:"AI Solutions Training",desc:"Training your teams on relevant AI tools and solutions."}
+      ],
+      fin:"We can also help research financial services according to your own situation.",
+      more:"View all services"
+    },
+    cta:{title:"Ready for clarity?",text:"Start with our free 15-question AI diagnostic — no commitment required.",btn:"Start the diagnostic"},
+    media:{title:"StratAIgist Media",sub:"Coming soon",desc:"An ecosystem where we gather valuable and inspiring content to join businesses in their AI journey. No hype — just clarity and agency.",platforms:["YouTube Channel","Podcast","Live Conferences","Webinars"],statuses:["Coming soon","Coming soon","By request","Coming soon"]},
+    about:{label:"The Founder",role:"Executive Business StratAIgist",bio:"Over 25 years of experience in commercial strategy, business development and executive team leadership. MBA, ICF certified coaching, AI & data project management training (HEC Montréal). A deeply human approach to business transformation.",cta:"Schedule a conversation"},
+    partners:{title:"Our Partners",sub:"An extended team of specialists to better support you."},
+    diagnostic:{title:"Quick AI Diagnostic",desc:"Get a first overview of your artificial intelligence needs in just a few minutes.",card:"Answer 15 strategic questions to get an initial overview of your AI maturity and personalized recommendations.",cta:"Start the diagnostic",time:"⏱ About 5 minutes"},
+    contact:{label:"Contact",title:"Let's talk about your needs",sub:"Select the service you're interested in",options:["Diagnostic","AI Advisory","Conference","Training","Team Workshop","Coaching","Podcast","Other"],name:"Full name",email:"Email",company:"Company",message:"Your message",send:"Send",nl:"Subscribe to the StratAIgist newsletter",nlCta:"Subscribe",nlPh:"your@email.com"},
+    footer:{tag:"Clarity. Guidance. Transformation.",email:"info@strataigistmedia.com",copy:"© 2026 StratAIgist Media. All rights reserved."}
+  }
+};
+
+let lang="fr", currentPage="home", chips=[];
+const pages=["home","services","media","about","partners","diagnostic","contact"];
+const icons=["▶","🎧","🎤","💻"];
+
+function render(){
+  const d=D[lang];
+  // Nav
+  let nl="";
+  pages.forEach(p=>{nl+=`<button class="nav-link${p===currentPage?' active':''}" onclick="goTo('${p}')">${d.nav[p]}</button>`;});
+  nl+=`<button class="lang-switch" onclick="switchLang()">${lang==='fr'?'EN':'FR'}</button>`;
+  document.getElementById("navLinks").innerHTML=nl;
+  let ml="";
+  pages.forEach(p=>{ml+=`<button class="nav-link${p===currentPage?' active':''}" onclick="goTo('${p}');closeMenu()">${d.nav[p]}</button>`;});
+  ml+=`<button class="lang-switch" onclick="switchLang();closeMenu()" style="margin-top:16px">${lang==='fr'?'English':'Français'}</button>`;
+  document.getElementById("mobileLinks").innerHTML=ml;
+
+  // Home
+  document.getElementById("heroTagline").innerText=d.hero.tagline;
+  document.getElementById("heroH1").innerText=d.hero.h1;
+  document.getElementById("heroSub").innerText=d.hero.sub;
+  document.getElementById("heroCta1").innerText=d.hero.cta1;
+  document.getElementById("heroCta2").innerText=d.hero.cta2;
+  document.getElementById("essLabel").innerText=d.essence.label;
+  document.getElementById("essTitle").innerText=d.essence.title;
+  document.getElementById("essText").innerText=d.essence.text;
+  document.getElementById("svcTitle").innerText=d.services.title;
+  document.getElementById("svcSub").innerText=d.services.sub;
+  document.getElementById("svcMore").innerText=d.services.more;
+  document.getElementById("ctaTitle").innerText=d.cta.title;
+  document.getElementById("ctaText").innerText=d.cta.text;
+  document.getElementById("ctaBtn").innerText=d.cta.btn;
+
+  let sv="";
+  d.services.items.slice(0,3).forEach((s,i)=>{
+    sv+=`<div class="service-item reveal d${i+1}"><span class="service-num">${s.num}</span><div><p class="service-name" style="color:var(--cream)">${s.name}</p><p class="service-desc" style="color:var(--beige)">${s.desc}</p></div></div>`;
+  });
+  document.getElementById("svcPreview").innerHTML=sv;
+
+  // Services page
+  document.getElementById("svcPageTitle").innerText=d.services.title;
+  document.getElementById("svcPageSub").innerText=d.services.sub;
+  document.getElementById("svcIntro").innerText=d.services.intro;
+  document.getElementById("svcFin").innerText=d.services.fin;
+  let sa="";
+  d.services.items.forEach((s,i)=>{
+    sa+=`<div class="service-item reveal d${Math.min(i,3)}"><span class="service-num">${s.num}</span><div><p class="service-name">${s.name}</p><p class="service-desc">${s.desc}</p></div></div>`;
+  });
+  document.getElementById("svcAll").innerHTML=sa;
+
+  // Media
+  document.getElementById("mediaTitle").innerText=d.media.title;
+  document.getElementById("mediaSub").innerText=d.media.sub;
+  document.getElementById("mediaDesc").innerText=d.media.desc;
+  let pg="";
+  d.media.platforms.forEach((p,i)=>{
+    const st=d.media.statuses?d.media.statuses[i]:d.media.sub;
+    pg+=`<div class="platform-item reveal d${i+1}"><div class="platform-icon">${icons[i]}</div><p class="platform-name">${p}</p><p class="platform-status">${st}</p></div>`;
+  });
+  document.getElementById("platGrid").innerHTML=pg;
+
+  // About
+  document.getElementById("aboutLabel").innerText=d.about.label;
+  document.getElementById("aboutRole").innerText=d.about.role;
+  document.getElementById("aboutBio").innerText=d.about.bio;
+  document.getElementById("aboutCta").innerText=d.about.cta;
+
+  // Partners
+  document.getElementById("partTitle").innerText=d.partners.title;
+  document.getElementById("partSub").innerText=d.partners.sub;
+
+  // Diagnostic
+  document.getElementById("diagTitle").innerText=d.diagnostic.title;
+  document.getElementById("diagDesc").innerText=d.diagnostic.desc;
+  document.getElementById("diagCard").innerText=d.diagnostic.card;
+  document.getElementById("diagCta").innerText=d.diagnostic.cta;
+  document.getElementById("diagTime").innerText=d.diagnostic.time;
+
+  // Contact
+  document.getElementById("ctcLabel").innerText=d.contact.label;
+  document.getElementById("ctcTitle").innerText=d.contact.title;
+  document.getElementById("ctcSub").innerText=d.contact.sub;
+  let ch="";
+  d.contact.options.forEach(o=>{
+    ch+=`<button class="chip${chips.includes(o)?' selected':''}" onclick="toggleChip('${o.replace(/'/g,"\\'")}')">${o}</button>`;
+  });
+  document.getElementById("ctcChips").innerHTML=ch;
+  let fm=`
+    <div class="form-field"><label>${d.contact.name}</label><input type="text"></div>
+    <div class="form-field"><label>${d.contact.email}</label><input type="email"></div>
+    <div class="form-field"><label>${d.contact.company}</label><input type="text"></div>
+    <div class="form-field"><label>${d.contact.message}</label><textarea></textarea></div>
+    <button class="btn-primary" style="margin-top:12px;width:100%">${d.contact.send}</button>`;
+  document.getElementById("ctcForm").innerHTML=fm;
+  document.getElementById("nlTitle").innerText=d.contact.nl;
+  document.getElementById("nlInput").placeholder=d.contact.nlPh;
+  document.getElementById("nlBtn").innerText=d.contact.nlCta;
+
+  // Footer
+  document.getElementById("ftTag").innerText=d.footer.tag;
+  document.getElementById("ftEmail").innerText=d.footer.email;
+  document.getElementById("ftCopy").innerText=d.footer.copy;
+
+  setTimeout(initObserver,80);
+}
+
+function goTo(p){
+  document.querySelectorAll(".page").forEach(el=>el.classList.remove("active"));
+  document.getElementById("page-"+p).classList.add("active");
+  currentPage=p; window.scrollTo({top:0,behavior:"smooth"}); render();
+}
+function switchLang(){ lang=lang==="fr"?"en":"fr"; chips=[]; render(); }
+function toggleChip(o){ chips.includes(o)?chips=chips.filter(c=>c!==o):chips.push(o); render(); }
+function openMenu(){ document.getElementById("mobileMenu").classList.add("open"); }
+function closeMenu(){ document.getElementById("mobileMenu").classList.remove("open"); }
+
+// Scroll
+window.addEventListener("scroll",()=>{
+  const n=document.getElementById("navbar");
+  window.scrollY>60?n.classList.add("scrolled"):n.classList.remove("scrolled");
+  // Parallax
+  document.querySelectorAll(".parallax-band img").forEach(img=>{
+    const r=img.parentElement.getBoundingClientRect();
+    if(r.bottom>0&&r.top<window.innerHeight){
+      const pct=(r.top/window.innerHeight);
+      img.style.transform=`translateY(${pct*40}px)`;
+    }
+  });
+});
+
+function initObserver(){
+  const obs=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add("visible");obs.unobserve(e.target);}});
+  },{threshold:.1});
+  document.querySelectorAll(".reveal:not(.visible),.service-item:not(.visible)").forEach(el=>obs.observe(el));
+}
+
+render();
+
+// ═══════ DIAGNOSTIC INTERACTIF ═══════
+const QData = {
+  dims:{
+    fr:["Vision stratégique et leadership","Données et infrastructure","Compétences et culture","Processus et cas d'usage","Éthique, gouvernance et risque"],
+    en:["Strategic Vision & Leadership","Data & Infrastructure","Skills & Culture","Processes & Use Cases","Ethics, Governance & Risk"]
+  },
+  questions:{
+    fr:[
+      "Quelle place occupe l'intelligence artificielle dans la stratégie de votre entreprise\u00A0?",
+      "Qui porte le sujet de l'IA dans votre organisation\u00A0?",
+      "Votre équipe de direction comprend-elle le potentiel et les limites de l'IA pour votre secteur\u00A0?",
+      "Comment décririez-vous l'état de vos données d'entreprise\u00A0?",
+      "Vos systèmes technologiques actuels pourraient-ils supporter des outils d'IA\u00A0?",
+      "Avez-vous des politiques de gouvernance des données (qualité, sécurité, confidentialité)\u00A0?",
+      "Quel est le niveau de compétence IA au sein de votre équipe\u00A0?",
+      "Comment votre culture d'entreprise accueille-t-elle le changement et l'innovation\u00A0?",
+      "Vos employés ont-ils accès à de la formation continue sur les technologies émergentes\u00A0?",
+      "Avez-vous identifié des processus d'affaires qui bénéficieraient de l'IA\u00A0?",
+      "Utilisez-vous déjà des outils d'IA dans vos opérations\u00A0?",
+      "Comment mesurez-vous le succès de vos initiatives technologiques\u00A0?",
+      "Avez-vous réfléchi aux implications éthiques de l'utilisation de l'IA dans votre entreprise\u00A0?",
+      "Comment gérez-vous les risques liés aux nouvelles technologies\u00A0?",
+      "Êtes-vous au courant des réglementations et lois émergentes sur l'IA dans votre marché\u00A0?"
+    ],
+    en:[
+      "What role does AI play in your company's strategy?",
+      "Who drives the AI agenda in your organization?",
+      "Does your leadership team understand AI's potential and limitations for your industry?",
+      "How would you describe the state of your business data?",
+      "Could your current technology systems support AI tools?",
+      "Do you have data governance policies (quality, security, privacy)?",
+      "What is the AI skill level within your team?",
+      "How does your company culture embrace change and innovation?",
+      "Do your employees have access to ongoing training on emerging technologies?",
+      "Have you identified business processes that could benefit from AI?",
+      "Are you already using AI tools in your operations?",
+      "How do you measure the success of your technology initiatives?",
+      "Have you considered the ethical implications of using AI in your business?",
+      "How do you manage risks related to new technologies?",
+      "Are you aware of emerging AI regulations and laws in your market?"
+    ]
+  },
+  options:{
+    fr:[
+      ["L'IA n'est pas encore un sujet de discussion au niveau de la direction.","Nous en parlons, mais il n'y a pas de plan concret.","Nous avons identifié des cas d'usage prioritaires et un budget exploratoire.","L'IA fait partie intégrante de notre plan stratégique avec des objectifs mesurables."],
+      ["Personne en particulier — le sujet émerge ponctuellement.","Quelques employés curieux l'explorent de façon individuelle.","Un gestionnaire ou une équipe a un mandat d'exploration IA.","Un leader exécutif est responsable de la vision et de la feuille de route IA."],
+      ["Très peu — le sujet reste flou pour la plupart des dirigeants.","Quelques membres ont une compréhension générale.","La majorité de l'équipe de direction comprend les opportunités clés.","L'ensemble du comité exécutif est informé et aligné sur les priorités IA."],
+      ["Nos données sont dispersées, peu structurées et difficiles d'accès.","Certaines données sont organisées, mais il manque une vision d'ensemble.","Nous avons un inventaire de nos données principales et des processus de gestion en place.","Nos données sont centralisées, de bonne qualité, documentées et accessibles aux équipes."],
+      ["Notre infrastructure est vieillissante et peu flexible.","Nous avons des systèmes modernes, mais ils fonctionnent en silos.","Nos systèmes sont connectés et nous avons commencé à intégrer des services cloud.","Notre infrastructure est agile, cloud-ready et conçue pour évoluer."],
+      ["Non, ce n'est pas en place.","Nous avons quelques règles informelles.","Des politiques formelles existent mais ne sont pas appliquées partout.","Nous avons un cadre de gouvernance complet et respecté dans l'ensemble de l'organisation."],
+      ["Très limité — peu de gens utilisent des outils d'IA au quotidien.","Quelques personnes utilisent ChatGPT ou des outils similaires de façon autonome.","Des formations ont été offertes et plusieurs employés intègrent l'IA dans leur travail.","Nous avons des compétences IA internes solides et un programme de développement continu."],
+      ["Le changement rencontre beaucoup de résistance.","Les gens sont ouverts mais hésitants — il faut les convaincre.","L'innovation est encouragée et les employés sont curieux.","L'expérimentation fait partie de notre ADN — on apprend rapidement de nos essais."],
+      ["Non, la formation se limite aux outils existants.","Quelques formations ponctuelles sont offertes à la demande.","Un plan de formation incluant l'IA et le numérique est en cours de déploiement.","Nous avons un programme structuré de montée en compétences IA pour toute l'organisation."],
+      ["Non, nous n'avons pas encore fait cet exercice.","Nous avons des idées générales mais rien de précis.","Nous avons cartographié nos processus et identifié 2-3 cas d'usage prioritaires.","Nous avons une liste priorisée de cas d'usage avec des analyses de rentabilité."],
+      ["Non, aucun.","Quelques outils individuels (ex : ChatGPT, Copilot) utilisés de façon informelle.","Nous avons déployé 1-2 solutions IA dans des processus spécifiques.","L'IA est intégrée dans plusieurs processus clés avec des résultats mesurés."],
+      ["Nous ne mesurons pas systématiquement.","Nous suivons quelques indicateurs de base (coûts, délais).","Nous avons des KPI définis pour nos projets numériques.","Chaque initiative a des indicateurs de performance clairs liés aux objectifs d'affaires."],
+      ["Pas encore — ce n'est pas un sujet abordé.","Nous sommes conscients des enjeux, mais sans politique définie.","Nous avons commencé à établir des principes directeurs pour une utilisation responsable.","Nous avons un cadre éthique IA documenté et appliqué, incluant la transparence et l'équité."],
+      ["Nous n'avons pas de processus de gestion des risques technologiques.","Les risques sont gérés de façon réactive quand des problèmes surviennent.","Nous avons un processus d'évaluation des risques pour les nouveaux projets.","La gestion des risques est intégrée dans notre gouvernance, incluant la cybersécurité et la conformité."],
+      ["Non, ce n'est pas sur notre radar.","Nous en avons entendu parler mais sans approfondir.","Nous suivons les développements réglementaires et évaluons leur impact.","Nous avons un plan d'adaptation aux réglementations IA et nous sommes en conformité."]
+    ],
+    en:[
+      ["AI is not yet a topic of discussion at the leadership level.","We talk about it, but there's no concrete plan.","We've identified priority use cases and an exploratory budget.","AI is an integral part of our strategic plan with measurable objectives."],
+      ["No one in particular — the topic comes up occasionally.","A few curious employees explore it individually.","A manager or team has an AI exploration mandate.","An executive leader is responsible for the AI vision and roadmap."],
+      ["Very little — the topic remains vague for most leaders.","A few members have a general understanding.","Most of the leadership team understands the key opportunities.","The entire executive committee is informed and aligned on AI priorities."],
+      ["Our data is scattered, unstructured, and hard to access.","Some data is organized, but we lack an overall view.","We have an inventory of our main data and management processes in place.","Our data is centralized, high-quality, documented, and accessible to teams."],
+      ["Our infrastructure is aging and inflexible.","We have modern systems, but they work in silos.","Our systems are connected and we've started integrating cloud services.","Our infrastructure is agile, cloud-ready, and designed to evolve."],
+      ["No, it's not in place.","We have some informal rules.","Formal policies exist but aren't applied everywhere.","We have a complete governance framework respected across the organization."],
+      ["Very limited — few people use AI tools daily.","Some people use ChatGPT or similar tools independently.","Training has been offered and several employees integrate AI in their work.","We have solid internal AI skills and a continuous development program."],
+      ["Change meets a lot of resistance.","People are open but hesitant — they need convincing.","Innovation is encouraged and employees are curious.","Experimentation is part of our DNA — we learn quickly from trials."],
+      ["No, training is limited to existing tools.","A few ad-hoc trainings are offered on demand.","A training plan including AI and digital is being deployed.","We have a structured AI upskilling program for the entire organization."],
+      ["No, we haven't done this exercise yet.","We have general ideas but nothing specific.","We've mapped our processes and identified 2-3 priority use cases.","We have a prioritized list of use cases with ROI analyses."],
+      ["No, none.","A few individual tools (e.g., ChatGPT, Copilot) used informally.","We've deployed 1-2 AI solutions in specific processes.","AI is integrated into several key processes with measured results."],
+      ["We don't measure systematically.","We track a few basic indicators (costs, timelines).","We have defined KPIs for our digital projects.","Each initiative has clear performance indicators tied to business objectives."],
+      ["Not yet — it's not a topic we've addressed.","We're aware of the issues, but without a defined policy.","We've started establishing guidelines for responsible use.","We have a documented AI ethics framework including transparency and fairness."],
+      ["We have no technology risk management process.","Risks are managed reactively when problems arise.","We have a risk assessment process for new projects.","Risk management is integrated into our governance, including cybersecurity and compliance."],
+      ["No, it's not on our radar.","We've heard about it but haven't looked into it.","We follow regulatory developments and assess their impact.","We have a plan to adapt to AI regulations and are in compliance."]
+    ]
+  },
+  levels:{
+    fr:[
+      {name:"Découverte 🌱",desc:"Votre entreprise est au début de son parcours IA. C'est le moment idéal pour poser les bonnes fondations.",reco:"Service recommandé : Diagnostic IA d'affaires + Vision IA — Plan d'action"},
+      {name:"Exploration 🔍",desc:"Vous êtes conscient du potentiel de l'IA et des premières initiatives émergent. Pour accélérer, vous avez besoin de structure et d'accompagnement.",reco:"Services recommandés : Vision IA — Plan d'action + Ateliers & conférences IA"},
+      {name:"Accélération 🚀",desc:"Votre organisation a de bonnes bases. Le défi est maintenant de passer à l'échelle et de solidifier la gouvernance.",reco:"Services recommandés : Gestion de projets IA + Recherche de solutions & partenaires"},
+      {name:"Transformation ⭐",desc:"Félicitations ! Votre entreprise est bien positionnée. L'enjeu est de maintenir votre avance et d'explorer les technologies de pointe.",reco:"Service recommandé : Partenariat stratégique continu + Formation solutions IA avancées"}
+    ],
+    en:[
+      {name:"Discovery 🌱",desc:"Your company is at the beginning of its AI journey. This is the ideal time to lay the right foundations.",reco:"Recommended: AI Business Diagnostic + AI Vision — Action Plan"},
+      {name:"Exploration 🔍",desc:"You're aware of AI's potential and first initiatives are emerging. To accelerate, you need structure and guidance.",reco:"Recommended: AI Vision — Action Plan + AI Workshops & Conferences"},
+      {name:"Acceleration 🚀",desc:"Your organization has solid foundations. The challenge now is to scale up and strengthen governance.",reco:"Recommended: AI Project Management + Solution & Partner Research"},
+      {name:"Transformation ⭐",desc:"Congratulations! Your company is well positioned. The goal is to maintain your lead and explore cutting-edge technologies.",reco:"Recommended: Ongoing Strategic Partnership + Advanced AI Training"}
+    ]
+  },
+  ui:{
+    fr:{title:"Vos résultats",dimTitle:"Score par dimension",cta:"Planifier une conversation",reset:"Recommencer",of:"de",emailCheck:"Recevoir ce diagnostic préliminaire par courriel\u00A0?",emailPh:"votre@courriel.com",emailBtn:"Envoyer",emailSent:"Merci\u00A0! Votre diagnostic a été envoyé.",emailErr:"Veuillez entrer un courriel valide."},
+    en:{title:"Your Results",dimTitle:"Score by Dimension",cta:"Book a conversation",reset:"Start over",of:"of",emailCheck:"Receive this preliminary diagnostic by email?",emailPh:"your@email.com",emailBtn:"Send",emailSent:"Thank you! Your diagnostic has been sent.",emailErr:"Please enter a valid email address."}
+  }
+};
+
+let quizAnswers=new Array(15).fill(-1), quizCurrent=0;
+
+function startDiag(){
+  document.getElementById("diagIntro").style.display="none";
+  document.getElementById("diagQuiz").style.display="block";
+  quizAnswers.fill(-1); quizCurrent=0;
+  renderQ();
+}
+
+function renderQ(){
+  const q=quizCurrent, l=lang;
+  const dimIdx=Math.floor(q/3);
+  document.getElementById("quizBar").style.width=((q/15)*100)+"%";
+  document.getElementById("quizCounter").textContent=`${q+1} ${QData.ui[l].of} 15`;
+  document.getElementById("quizDim").textContent=QData.dims[l][dimIdx];
+  document.getElementById("quizQ").textContent=QData.questions[l][q];
+  document.getElementById("quizBack").style.visibility=q>0?"visible":"hidden";
+  let oh="";
+  QData.options[l][q].forEach((opt,i)=>{
+    const sel=quizAnswers[q]===i?"selected":"";
+    oh+=`<div class="quiz-opt ${sel}" onclick="pickOpt(${i})">${opt}</div>`;
+  });
+  document.getElementById("quizOpts").innerHTML=oh;
+}
+
+function pickOpt(i){
+  quizAnswers[quizCurrent]=i;
+  document.querySelectorAll(".quiz-opt").forEach((el,idx)=>{
+    el.classList.toggle("selected",idx===i);
+  });
+  setTimeout(()=>{
+    if(quizCurrent<14){ quizCurrent++; renderQ(); }
+    else { showResults(); }
+  },350);
+}
+
+function prevQ(){
+  if(quizCurrent>0){ quizCurrent--; renderQ(); }
+}
+
+function showResults(){
+  document.getElementById("diagQuiz").style.display="none";
+  document.getElementById("diagResults").style.display="block";
+  const l=lang;
+  const total=quizAnswers.reduce((s,v)=>s+(v+1),0);
+  const dimScores=[];
+  for(let d=0;d<5;d++){
+    dimScores.push((quizAnswers[d*3]+1)+(quizAnswers[d*3+1]+1)+(quizAnswers[d*3+2]+1));
+  }
+  let lvl=0;
+  if(total>=25) lvl=1; if(total>=37) lvl=2; if(total>=49) lvl=3;
+
+  document.getElementById("resTitle").textContent=QData.ui[l].title;
+  document.getElementById("resLevel").textContent=QData.levels[l][lvl].name;
+  document.getElementById("resDesc").textContent=QData.levels[l][lvl].desc;
+  document.getElementById("resReco").textContent=QData.levels[l][lvl].reco;
+  document.getElementById("resDimTitle").textContent=QData.ui[l].dimTitle;
+  document.getElementById("resCta").textContent=QData.ui[l].cta;
+  document.getElementById("resReset").textContent=QData.ui[l].reset;
+
+  // Animate score circle
+  const circle=document.getElementById("scoreCircle");
+  const pct=total/60;
+  const offset=534-(534*pct);
+  setTimeout(()=>{ circle.style.transition="stroke-dashoffset 1.5s cubic-bezier(.22,1,.36,1)"; circle.style.strokeDashoffset=offset; },100);
+
+  // Animate score number
+  let count=0;
+  const numEl=document.getElementById("scoreNum");
+  const countUp=setInterval(()=>{ count++; numEl.textContent=count; if(count>=total) clearInterval(countUp); },30);
+
+  // Dimension bars
+  let bh="";
+  QData.dims[l].forEach((name,i)=>{
+    bh+=`<div class="dim-bar-row"><div class="dim-bar-label"><span>${name}</span><span>${dimScores[i]}/12</span></div><div class="dim-bar-track"><div class="dim-bar-fill" data-w="${(dimScores[i]/12)*100}%"></div></div></div>`;
+  });
+  document.getElementById("dimBars").innerHTML=bh;
+  setTimeout(()=>{
+    document.querySelectorAll(".dim-bar-fill").forEach(el=>{el.style.width=el.dataset.w;});
+  },300);
+
+  // Email box labels
+  document.getElementById("emailCheckText").textContent=QData.ui[l].emailCheck;
+  document.getElementById("emailInput").placeholder=QData.ui[l].emailPh;
+  document.getElementById("emailSendBtn").textContent=QData.ui[l].emailBtn;
+  document.getElementById("emailStatus").textContent="";
+  document.getElementById("emailCheck").checked=false;
+  document.getElementById("emailFieldWrap").style.display="none";
+
+  // Radar chart
+  drawRadar(dimScores,l);
+}
+
+function toggleEmailField(){
+  document.getElementById("emailFieldWrap").style.display=
+    document.getElementById("emailCheck").checked?"flex":"none";
+}
+
+function sendDiagEmail(){
+  const email=document.getElementById("emailInput").value.trim();
+  const l=lang;
+  if(!email||!email.includes("@")){
+    document.getElementById("emailStatus").textContent=QData.ui[l].emailErr;
+    document.getElementById("emailStatus").style.color="var(--gold)";
+    return;
+  }
+  // Collect results data
+  const total=quizAnswers.reduce((s,v)=>s+(v+1),0);
+  const dimScores=[];
+  for(let d=0;d<5;d++){
+    dimScores.push((quizAnswers[d*3]+1)+(quizAnswers[d*3+1]+1)+(quizAnswers[d*3+2]+1));
+  }
+  let lvl=0;
+  if(total>=25) lvl=1; if(total>=37) lvl=2; if(total>=49) lvl=3;
+
+  // Build email body for mailto fallback
+  const dims=QData.dims[l];
+  let body=l==="fr"?"Diagnostic IA préliminaire — StratAIgist Media":"Preliminary AI Diagnostic — StratAIgist Media";
+  body+="\n\n"+(l==="fr"?"Score total":"Total Score")+": "+total+"/60";
+  body+="\n"+(l==="fr"?"Niveau":"Level")+": "+QData.levels[l][lvl].name;
+  body+="\n\n"+(l==="fr"?"Score par dimension":"Score by dimension")+":";
+  dims.forEach((d,i)=>{ body+="\n  "+d+": "+dimScores[i]+"/12"; });
+  body+="\n\n"+QData.levels[l][lvl].desc;
+  body+="\n\n"+QData.levels[l][lvl].reco;
+  body+="\n\n---\n"+(l==="fr"?"Planifiez une conversation":"Book a conversation")+": info@strataigistmedia.com";
+
+  // Use mailto as interim solution (will be replaced by backend API at deployment)
+  const subject=encodeURIComponent(l==="fr"?"Votre diagnostic IA — StratAIgist Media":"Your AI Diagnostic — StratAIgist Media");
+  const encodedBody=encodeURIComponent(body);
+  window.open("mailto:"+email+"?cc=info@strataigistmedia.com&subject="+subject+"&body="+encodedBody);
+
+  document.getElementById("emailStatus").textContent=QData.ui[l].emailSent;
+  document.getElementById("emailStatus").style.color="var(--sage)";
+}
+
+function drawRadar(scores,l){
+  const cx=150,cy=130,r=100,dims=5;
+  const angles=scores.map((_,i)=>(Math.PI*2*i/dims)-(Math.PI/2));
+  // Grid
+  let svg="";
+  [.25,.5,.75,1].forEach(s=>{
+    let pts=angles.map(a=>`${cx+r*s*Math.cos(a)},${cy+r*s*Math.sin(a)}`).join(" ");
+    svg+=`<polygon points="${pts}" fill="none" stroke="var(--beige)" stroke-width="1"/>`;
+  });
+  // Axis lines
+  angles.forEach(a=>{
+    svg+=`<line x1="${cx}" y1="${cy}" x2="${cx+r*Math.cos(a)}" y2="${cy+r*Math.sin(a)}" stroke="var(--beige)" stroke-width="1"/>`;
+  });
+  // Labels
+  const labels=QData.dims[l].map(n=>n.length>18?n.substring(0,16)+"…":n);
+  angles.forEach((a,i)=>{
+    const lx=cx+(r+22)*Math.cos(a), ly=cy+(r+22)*Math.sin(a);
+    const anchor=Math.abs(Math.cos(a))<.1?"middle":Math.cos(a)>0?"start":"end";
+    svg+=`<text x="${lx}" y="${ly}" text-anchor="${anchor}" font-size="8" fill="var(--forest)" font-family="Inter" font-weight="300">${labels[i]}</text>`;
+  });
+  // Data polygon
+  const dataPts=scores.map((s,i)=>{
+    const pct=s/12;
+    return `${cx+r*pct*Math.cos(angles[i])},${cy+r*pct*Math.sin(angles[i])}`;
+  }).join(" ");
+  svg+=`<polygon points="${dataPts}" fill="rgba(201,153,77,.15)" stroke="var(--gold)" stroke-width="2" class="radar-data"/>`;
+  // Data dots
+  scores.forEach((s,i)=>{
+    const pct=s/12;
+    svg+=`<circle cx="${cx+r*pct*Math.cos(angles[i])}" cy="${cy+r*pct*Math.sin(angles[i])}" r="4" fill="var(--gold)"/>`;
+  });
+  document.getElementById("radarSvg").innerHTML=svg;
+}
+
+function resetDiag(){
+  document.getElementById("diagResults").style.display="none";
+  document.getElementById("diagIntro").style.display="block";
+  document.getElementById("scoreCircle").style.strokeDashoffset="534";
+  document.getElementById("scoreCircle").style.transition="none";
+  quizAnswers.fill(-1); quizCurrent=0;
+}
+
+render();
+</script>
+</body>
+</html>
