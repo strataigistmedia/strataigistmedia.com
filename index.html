@@ -13,6 +13,7 @@
 <meta property="og:url" content="https://strataigistmedia.com">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
@@ -920,6 +921,7 @@ footer .copy {
 
         <div style="text-align:center;margin-top:32px">
           <button class="btn-primary" onclick="window.open('https://cal.com/strataigist','_blank')" id="resCta"></button>
+          <button class="btn-dark" style="margin-left:12px" onclick="downloadDiagPDF()" id="resPDF"></button>
           <button class="btn-dark" style="margin-left:12px" onclick="resetDiag()" id="resReset"></button>
         </div>
       </div>
@@ -1122,7 +1124,7 @@ function render(){
     <div class="form-field"><label>${d.contact.email}</label><input type="email"></div>
     <div class="form-field"><label>${d.contact.company}</label><input type="text"></div>
     <div class="form-field"><label>${d.contact.message}</label><textarea></textarea></div>
-    <button class="btn-primary" style="margin-top:12px;width:100%">${d.contact.send}</button>`;
+    <button class="btn-primary" style="margin-top:12px;width:100%" onclick="submitContact(this)">${d.contact.send}</button>`;
   document.getElementById("ctcForm").innerHTML=fm;
   document.getElementById("nlTitle").innerText=d.contact.nl;
   document.getElementById("nlInput").placeholder=d.contact.nlPh;
@@ -1262,8 +1264,8 @@ const QData = {
     ]
   },
   ui:{
-    fr:{title:"Vos résultats",dimTitle:"Score par dimension",cta:"Planifier une conversation",reset:"Recommencer",of:"de",emailCheck:"Recevoir ce diagnostic préliminaire par courriel\u00A0?",emailPh:"votre@courriel.com",emailBtn:"Envoyer",emailSent:"Merci\u00A0! Votre diagnostic a été envoyé.",emailErr:"Veuillez entrer un courriel valide."},
-    en:{title:"Your Results",dimTitle:"Score by Dimension",cta:"Book a conversation",reset:"Start over",of:"of",emailCheck:"Receive this preliminary diagnostic by email?",emailPh:"your@email.com",emailBtn:"Send",emailSent:"Thank you! Your diagnostic has been sent.",emailErr:"Please enter a valid email address."}
+    fr:{title:"Vos résultats",dimTitle:"Score par dimension",cta:"Planifier une conversation",pdf:"Télécharger le PDF",reset:"Recommencer",of:"de",emailCheck:"Recevoir ce diagnostic préliminaire par courriel\u00A0?",emailPh:"votre@courriel.com",emailBtn:"Envoyer",emailSent:"Merci\u00A0! Votre diagnostic a été envoyé.",emailErr:"Veuillez entrer un courriel valide."},
+    en:{title:"Your Results",dimTitle:"Score by Dimension",cta:"Book a conversation",pdf:"Download PDF",reset:"Start over",of:"of",emailCheck:"Receive this preliminary diagnostic by email?",emailPh:"your@email.com",emailBtn:"Send",emailSent:"Thank you! Your diagnostic has been sent.",emailErr:"Please enter a valid email address."}
   }
 };
 
@@ -1325,6 +1327,7 @@ function showResults(){
   document.getElementById("resReco").textContent=QData.levels[l][lvl].reco;
   document.getElementById("resDimTitle").textContent=QData.ui[l].dimTitle;
   document.getElementById("resCta").textContent=QData.ui[l].cta;
+  document.getElementById("resPDF").textContent=QData.ui[l].pdf;
   document.getElementById("resReset").textContent=QData.ui[l].reset;
 
   // Animate score circle
@@ -1442,6 +1445,186 @@ function resetDiag(){
   document.getElementById("scoreCircle").style.strokeDashoffset="534";
   document.getElementById("scoreCircle").style.transition="none";
   quizAnswers.fill(-1); quizCurrent=0;
+}
+
+// ─── PDF GENERATION ───
+function downloadDiagPDF(){
+  const l=lang;
+  const total=quizAnswers.reduce((s,v)=>s+(v+1),0);
+  const dimScores=[];
+  for(let d=0;d<5;d++){
+    dimScores.push((quizAnswers[d*3]+1)+(quizAnswers[d*3+1]+1)+(quizAnswers[d*3+2]+1));
+  }
+  let lvl=0;
+  if(total>=25) lvl=1; if(total>=37) lvl=2; if(total>=49) lvl=3;
+  const dims=QData.dims[l];
+  const level=QData.levels[l][lvl];
+
+  // Create PDF using jsPDF
+  const {jsPDF}=window.jspdf;
+  const doc=new jsPDF({unit:'mm',format:'a4'});
+  const w=210, margin=20;
+
+  // Header bar
+  doc.setFillColor(42,58,48);
+  doc.rect(0,0,w,38,  'F');
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(22);
+  doc.setTextColor(232,224,212);
+  doc.text('StratAIgist Media',margin,18);
+  doc.setFont('helvetica','normal');
+  doc.setFontSize(10);
+  doc.setTextColor(201,153,77);
+  doc.text(l==='fr'?'Diagnostic IA préliminaire':'Preliminary AI Diagnostic',margin,28);
+
+  // Score section
+  let y=52;
+  doc.setTextColor(42,58,48);
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(14);
+  doc.text(l==='fr'?'Votre score':'Your Score',margin,y);
+  y+=10;
+
+  // Score circle (simplified as text)
+  doc.setFontSize(36);
+  doc.setTextColor(201,153,77);
+  doc.text(total+'/60',margin,y+12);
+  doc.setFontSize(13);
+  doc.setTextColor(93,126,114);
+  doc.text(level.name.replace(/[^\w\s\u00C0-\u024F—]/g,''),margin+45,y+4);
+  y+=22;
+
+  // Level description
+  doc.setFont('helvetica','normal');
+  doc.setFontSize(10);
+  doc.setTextColor(60,60,60);
+  const descLines=doc.splitTextToSize(level.desc,w-2*margin);
+  doc.text(descLines,margin,y);
+  y+=descLines.length*5+8;
+
+  // Dimension scores
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(12);
+  doc.setTextColor(42,58,48);
+  doc.text(l==='fr'?'Score par dimension':'Score by Dimension',margin,y);
+  y+=8;
+
+  dims.forEach((name,i)=>{
+    const score=dimScores[i];
+    const pct=score/12;
+    // Bar background
+    doc.setFillColor(221,212,198);
+    doc.roundedRect(margin,y,120,6,2,2,'F');
+    // Bar fill
+    if(pct>.5) doc.setFillColor(201,153,77);
+    else doc.setFillColor(122,158,142);
+    doc.roundedRect(margin,y,120*pct,6,2,2,'F');
+    // Label
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(9);
+    doc.setTextColor(42,58,48);
+    doc.text(name,margin,y-2);
+    doc.text(score+'/12',margin+122,y+4);
+    y+=14;
+  });
+
+  // Recommendation
+  y+=4;
+  doc.setFillColor(250,245,236);
+  doc.roundedRect(margin-2,y-4,w-2*margin+4,24,3,3,'F');
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(10);
+  doc.setTextColor(42,58,48);
+  doc.text(l==='fr'?'Recommandation :':'Recommendation:',margin,y+2);
+  doc.setFont('helvetica','normal');
+  doc.setFontSize(9);
+  doc.setTextColor(60,60,60);
+  const recoLines=doc.splitTextToSize(level.reco,w-2*margin-4);
+  doc.text(recoLines,margin,y+9);
+  y+=32;
+
+  // CTA
+  doc.setFillColor(201,153,77);
+  doc.roundedRect(margin,y,w-2*margin,14,4,4,'F');
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(11);
+  doc.setTextColor(255,255,255);
+  const ctaText=l==='fr'?'Planifier une conversation':'Book a conversation';
+  const ctaW=doc.getTextWidth(ctaText);
+  doc.text(ctaText,(w-ctaW)/2,y+9);
+  doc.link(margin,y,w-2*margin,14,{url:'https://cal.com/strataigist'});
+  y+=22;
+
+  // Footer
+  doc.setDrawColor(221,212,198);
+  doc.line(margin,y,w-margin,y);
+  y+=6;
+  doc.setFont('helvetica','normal');
+  doc.setFontSize(8);
+  doc.setTextColor(140,140,140);
+  doc.text('strataigistmedia.com | info@strataigistmedia.com | cal.com/strataigist',margin,y);
+  doc.text(l==='fr'?'© 2026 StratAIgist Media. Tous droits réservés.':'© 2026 StratAIgist Media. All rights reserved.',margin,y+4);
+
+  // Safari-friendly download
+  const pdfBlob=doc.output('blob');
+  const url=URL.createObjectURL(pdfBlob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download=l==='fr'?'Diagnostic-IA-StratAIgist.pdf':'AI-Diagnostic-StratAIgist.pdf';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(()=>URL.revokeObjectURL(url),100);
+}
+
+// ─── CONTACT FORM (Web3Forms) ───
+const W3F_KEY='77112713-54a9-4348-a7b1-e847d3f781f8';
+
+async function submitContact(btn){
+  const wrapper=document.getElementById('ctcForm');
+  const allInputs=wrapper.querySelectorAll('input');
+  const allTextareas=wrapper.querySelectorAll('textarea');
+  const name=allInputs[0]?allInputs[0].value.trim():'';
+  const email=allInputs[1]?allInputs[1].value.trim():'';
+  const company=allInputs[2]?allInputs[2].value.trim():'';
+  const message=allTextareas[0]?allTextareas[0].value.trim():'';
+  const l=lang;
+
+  if(!name||!email||!message){
+    alert(l==='fr'?'Veuillez remplir les champs obligatoires (nom, courriel, message).':'Please fill in the required fields (name, email, message).');
+    return;
+  }
+
+  btn.disabled=true;
+  btn.textContent=l==='fr'?'Envoi en cours...':'Sending...';
+
+  const formData=new FormData();
+  formData.append('access_key',W3F_KEY);
+  formData.append('name',name);
+  formData.append('email',email);
+  formData.append('company',company);
+  formData.append('message',message);
+  formData.append('subject',l==='fr'?'Nouveau message — StratAIgist Media':'New message — StratAIgist Media');
+  formData.append('from_name','StratAIgist Media');
+  formData.append('replyto',email);
+  if(chips.length) formData.append('services',chips.join(', '));
+
+  try{
+    const res=await fetch('https://api.web3forms.com/submit',{
+      method:'POST',
+      body:formData
+    });
+    const data=await res.json();
+    if(data.success){
+      wrapper.innerHTML='<div style="text-align:center;padding:40px 0"><h3 style="color:var(--forest);margin-bottom:12px">'+(l==='fr'?'Message envoyé !':'Message sent!')+'</h3><p style="color:var(--teal)">'+(l==='fr'?'Merci ! Nous vous répondrons dans les 24 à 48 heures.':'Thank you! We\'ll get back to you within 24 to 48 hours.')+'</p></div>';
+    } else {
+      throw new Error(data.message||'Error');
+    }
+  }catch(e){
+    btn.disabled=false;
+    btn.textContent=D[l].contact.send;
+    alert(l==='fr'?'Une erreur est survenue. Veuillez réessayer.':'An error occurred. Please try again.');
+  }
 }
 
 render();
