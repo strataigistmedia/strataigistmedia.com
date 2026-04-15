@@ -921,7 +921,6 @@ footer .copy {
 
         <div style="text-align:center;margin-top:32px">
           <button class="btn-primary" onclick="window.open('https://cal.com/strataigist','_blank')" id="resCta"></button>
-          <button class="btn-dark" style="margin-left:12px" onclick="downloadDiagPDF()" id="resPDF"></button>
           <button class="btn-dark" style="margin-left:12px" onclick="resetDiag()" id="resReset"></button>
         </div>
       </div>
@@ -1264,8 +1263,8 @@ const QData = {
     ]
   },
   ui:{
-    fr:{title:"Vos résultats",dimTitle:"Score par dimension",cta:"Planifier une conversation",pdf:"Télécharger le PDF",reset:"Recommencer",of:"de",emailCheck:"Recevoir mon diagnostic en PDF et être contacté\u00A0?",emailPh:"votre@courriel.com",emailBtn:"Envoyer",emailSent:"Merci\u00A0! Votre diagnostic a été envoyé.",emailErr:"Veuillez entrer un courriel valide."},
-    en:{title:"Your Results",dimTitle:"Score by Dimension",cta:"Book a conversation",pdf:"Download PDF",reset:"Start over",of:"of",emailCheck:"Receive my diagnostic as PDF and be contacted?",emailPh:"your@email.com",emailBtn:"Send",emailSent:"Thank you! Your diagnostic has been sent.",emailErr:"Please enter a valid email address."}
+    fr:{title:"Vos résultats",dimTitle:"Score par dimension",cta:"Planifier une conversation",pdf:"Télécharger le PDF",reset:"Recommencer",of:"de",emailCheck:"Entrez votre courriel pour recevoir votre diagnostic en PDF",emailPh:"votre@courriel.com",emailBtn:"Envoyer",emailSent:"Merci\u00A0! Votre diagnostic a été envoyé.",emailErr:"Veuillez entrer un courriel valide."},
+    en:{title:"Your Results",dimTitle:"Score by Dimension",cta:"Book a conversation",pdf:"Download PDF",reset:"Start over",of:"of",emailCheck:"Enter your email to receive your diagnostic as PDF",emailPh:"your@email.com",emailBtn:"Send",emailSent:"Thank you! Your diagnostic has been sent.",emailErr:"Please enter a valid email address."}
   }
 };
 
@@ -1327,7 +1326,6 @@ function showResults(){
   document.getElementById("resReco").textContent=QData.levels[l][lvl].reco;
   document.getElementById("resDimTitle").textContent=QData.ui[l].dimTitle;
   document.getElementById("resCta").textContent=QData.ui[l].cta;
-  document.getElementById("resPDF").textContent=QData.ui[l].pdf;
   document.getElementById("resReset").textContent=QData.ui[l].reset;
 
   // Animate score circle
@@ -1637,23 +1635,18 @@ async function submitContact(btn){
   btn.disabled=true;
   btn.textContent=l==='fr'?'Envoi en cours...':'Sending...';
 
-  const autoMsg=l==='fr'
-    ?`Bonjour ${name.split(' ')[0]},\n\nNous avons bien reçu votre demande et nous vous répondrons dans les plus brefs délais.\n\nD'ici là, nous vous invitons à :\n\n• Découvrir votre maturité IA avec notre diagnostic gratuit :\nhttps://strataigistmedia.com\n(Section Diagnostic IA)\n\n• Planifier une première rencontre directement dans notre calendrier :\nhttps://cal.com/strataigist\n\n──────────────────\nMartine Charpentier\nStratège d'affaires & consultante exécutive\nStratAIgist Media\n\ninfo@strataigistmedia.com\nstrataigistmedia.com\n\nYouTube : youtube.com/@strataigist\nInstagram : instagram.com/strataigistmedia\nLinkedIn : linkedin.com/company/strataigist-media\n──────────────────`
-    :`Hi ${name.split(' ')[0]},\n\nWe've received your request and will get back to you as soon as possible.\n\nIn the meantime, we invite you to:\n\n• Discover your AI maturity with our free diagnostic:\nhttps://strataigistmedia.com\n(AI Diagnostic section)\n\n• Book a first meeting directly in our calendar:\nhttps://cal.com/strataigist\n\n──────────────────\nMartine Charpentier\nExecutive Business StratAIgist\nStratAIgist Media\n\ninfo@strataigistmedia.com\nstrataigistmedia.com\n\nYouTube: youtube.com/@strataigist\nInstagram: instagram.com/strataigistmedia\nLinkedIn: linkedin.com/company/strataigist-media\n──────────────────`;
-
   const formData=new FormData();
   formData.append('access_key',W3F_KEY);
-  formData.append('name',name);
+  formData.append(l==='fr'?'Nom':'Name',name);
+  formData.append(l==='fr'?'Courriel':'Email',email);
   formData.append('email',email);
-  formData.append('company',company);
-  formData.append('message',message);
+  formData.append(l==='fr'?'Entreprise':'Company',company);
+  formData.append(l==='fr'?'Message':'Message',message);
+  formData.append(l==='fr'?'Langue':'Language',l==='fr'?'Français':'English');
   formData.append('subject',l==='fr'?'Nouveau message — StratAIgist Media':'New message — StratAIgist Media');
   formData.append('from_name','StratAIgist Media');
   formData.append('replyto',email);
-  formData.append('autoresponse',autoMsg);
-  formData.append('autoresponse_from','StratAIgist Media');
-  formData.append('autoresponse_subject',l==='fr'?'Nous avons bien reçu votre message — StratAIgist Media':'We\'ve received your message — StratAIgist Media');
-  if(chips.length) formData.append('services',chips.join(', '));
+  if(chips.length) formData.append(l==='fr'?'Services demandés':'Requested services',chips.join(', '));
 
   try{
     const res=await fetch('https://api.web3forms.com/submit',{
