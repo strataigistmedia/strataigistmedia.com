@@ -123,17 +123,39 @@ body {
 }
 .nav.scrolled .hamburger { color:var(--cream); }
 .mobile-menu {
-  display:none; position:fixed; top:0; left:0; right:0; bottom:0;
-  background:rgba(42,58,48,.97); backdrop-filter:blur(20px);
-  z-index:199; flex-direction:column; justify-content:center;
-  align-items:center; gap:24px;
+  position:fixed; top:0; right:-280px; width:280px; bottom:0;
+  background:rgba(42,58,48,.98); backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  z-index:250; flex-direction:column;
+  align-items:flex-start; gap:8px;
+  padding:80px 32px 40px;
+  transition:right .4s cubic-bezier(.22,1,.36,1);
+  box-shadow:-4px 0 30px rgba(0,0,0,.3);
+  display:flex;
+  overflow-y:auto;
 }
-.mobile-menu.open { display:flex; }
-.mobile-menu .nav-link { color:var(--cream); font-size:18px; letter-spacing:2px; }
+.mobile-menu.open { right:0; }
+.mobile-overlay {
+  position:fixed; top:0; left:0; right:0; bottom:0;
+  background:rgba(0,0,0,.4); z-index:249;
+  opacity:0; visibility:hidden;
+  transition:opacity .3s, visibility .3s;
+}
+.mobile-overlay.open { opacity:1; visibility:visible; }
+.mobile-menu .nav-link {
+  color:var(--cream); font-size:15px; letter-spacing:1.5px;
+  padding:12px 0; width:100%;
+  border-bottom:1px solid rgba(250,245,236,.08);
+}
+.mobile-menu .nav-link:hover, .mobile-menu .nav-link.active {
+  color:var(--gold-soft);
+}
 .mobile-menu .close-btn {
-  position:absolute; top:24px; right:40px; background:none;
-  border:none; color:var(--cream); font-size:28px; cursor:pointer;
+  position:absolute; top:20px; right:20px; background:none;
+  border:none; color:var(--cream); font-size:24px; cursor:pointer;
+  opacity:.7; transition:opacity .3s;
 }
+.mobile-menu .close-btn:hover { opacity:1; }
 
 @media(max-width:900px) {
   .nav-links { display:none !important; }
@@ -657,6 +679,7 @@ footer .copy {
   <div class="nav-links" id="navLinks"></div>
   <button class="hamburger" onclick="openMenu()">☰</button>
 </nav>
+<div class="mobile-overlay" id="mobileOverlay" onclick="closeMenu()"></div>
 <div class="mobile-menu" id="mobileMenu">
   <button class="close-btn" onclick="closeMenu()">✕</button>
   <div id="mobileLinks"></div>
@@ -1144,8 +1167,16 @@ function goTo(p){
 }
 function switchLang(){ lang=lang==="fr"?"en":"fr"; chips=[]; render(); }
 function toggleChip(o){ chips.includes(o)?chips=chips.filter(c=>c!==o):chips.push(o); render(); }
-function openMenu(){ document.getElementById("mobileMenu").classList.add("open"); }
-function closeMenu(){ document.getElementById("mobileMenu").classList.remove("open"); }
+function openMenu(){
+  document.getElementById("mobileMenu").classList.add("open");
+  document.getElementById("mobileOverlay").classList.add("open");
+  document.body.style.overflow="hidden";
+}
+function closeMenu(){
+  document.getElementById("mobileMenu").classList.remove("open");
+  document.getElementById("mobileOverlay").classList.remove("open");
+  document.body.style.overflow="";
+}
 
 // Scroll
 window.addEventListener("scroll",()=>{
